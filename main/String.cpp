@@ -109,7 +109,9 @@ void String::copy(const String& other)
 	this->capacity = other.capacity;
 	this->size = other.size;
 	this->data = new char[other.capacity];
-	strcpy_s(this->data, other.size + 1, other.data);
+	if (other.size > 0) {
+		strcpy_s(this->data, other.size + 1, other.data);
+	}
 }
 
 //void String::copy(const char* other)

@@ -1,12 +1,8 @@
 #include "CommandList.h"
 int main()
 {
-	String a;
-	std::cin >> a;
-	std::cout << a << std::endl;
-	std::cout << a.getCapacity() << std::endl;
-	//CommandList a;
-	//a.run();
+	CommandList a;
+	a.run();
 	//a.add_planet("Earth");
 	//a.add_planet("Mars");
 	//a.create_jedi("Mars", "Vesko", "KNIGHT", 14, "red", 3);
