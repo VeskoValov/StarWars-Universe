@@ -3,7 +3,6 @@
 CommandList::CommandList()
 {
 	this->command = String::String();
-	this->command.setSize(32);
 	this->Planets = Vector<Planet>::Vector();
 	this->working = true;
 	this->commandList = Vector<String>::Vector();
@@ -25,7 +24,6 @@ void CommandList::run()
 	std::cout << "Welcome!" << std::endl;
 	while (this->working) {
 		std::cout << "Enter a command: ";
-		//std::cin.ignore();
 		std::cin >> command;
 		if (!(this->commandList.isElementPresent(command))) {
 			std::cout << "There is no command with that name! Try help for a list of commands." << std::endl;
@@ -59,7 +57,7 @@ void CommandList::add_planet(const String& name)
 void CommandList::add_planet()
 {
 	std::cout << "Enter the planet's name: ";
-	String name(16);
+	String name;
 	std::cin >> name;
 	Planet newPlanet(name);
 	Planets.push_back(newPlanet);
@@ -77,9 +75,7 @@ void CommandList::create_jedi(const String& pname, const String& jname, const St
 	}
 	for (size_t i = 0; i < this->Planets.getSize(); ++i)
 	{
-		//Vector<Jedi> temp = this->Planets[i].getJedis();
 		if (this->Planets[i].getName() == pname) {
-			//this->Planets[i].getJedis().push_back(newJedi);
 			this->Planets[i].addJedi(newJedi);
 			std::cout << "You have successfully added a new Jedi!" << std::endl;
 			return;
@@ -90,7 +86,7 @@ void CommandList::create_jedi(const String& pname, const String& jname, const St
 
 void CommandList::create_jedi()
 {
-	String pname(16), jname(16), rank(16), saberColor(16);
+	String pname, jname, rank, saberColor;
 	size_t age;
 	double strength;
 	std::cout << "Enter the planet's name: ";
@@ -138,7 +134,7 @@ void CommandList::remove_jedi(const String& jname, const String& pname)
 
 void CommandList::remove_jedi()
 {
-	String jname(16), pname(16);
+	String jname, pname;
 	std::cout << "Enter the jedi's name: ";
 	std::cin >> jname;
 	std::cout << "Enter the planet's name: ";
@@ -168,7 +164,7 @@ void CommandList::promote_jedi(const String& jname, const double& multiplier)
 
 void CommandList::promote_jedi()
 {
-	String jname(16);
+	String jname;
 	double multiplier;
 	std::cout << "Enter the jedi's name: ";
 	std::cin >> jname;
@@ -199,7 +195,7 @@ void CommandList::demote_jedi(const String& jname, const double& multiplier)
 
 void CommandList::demote_jedi()
 {
-	String jname(16);
+	String jname;
 	double multiplier;
 	std::cout << "Enter the jedi's name:";
 	std::cin >> jname;
@@ -223,7 +219,9 @@ void CommandList::get_strongest_jedi(const String& pname)
 	{
 		Jedi newJedi;
 		if (this->Planets[i].getName() == pname) {
-			for (size_t j = 0; j < this->Planets[i].getJedis().getSize(); ++j)
+			maxStrength = this->Planets[i].getJedis()[0].getPower();
+			newJedi = this->Planets[i].getJedis()[0];
+			for (size_t j = 1; j < this->Planets[i].getJedis().getSize(); ++j)
 			{
 				if (this->Planets[i].getJedis()[j].getPower() > maxStrength) {
 					maxStrength = this->Planets[i].getJedis()[j].getPower();
@@ -239,7 +237,7 @@ void CommandList::get_strongest_jedi(const String& pname)
 
 void CommandList::get_strongest_jedi()
 {
-	String pname(16);
+	String pname;
 	std::cout << "Enter the planet's name: ";
 	std::cin >> pname;
 	double maxStrength = 0;
@@ -247,6 +245,8 @@ void CommandList::get_strongest_jedi()
 	{
 		Jedi newJedi;
 		if (this->Planets[i].getName() == pname) {
+			maxStrength = this->Planets[i].getJedis()[0].getPower();
+			newJedi = this->Planets[i].getJedis()[0];
 			for (size_t j = 0; j < this->Planets[i].getJedis().getSize(); ++j)
 			{
 				if (this->Planets[i].getJedis()[j].getPower() > maxStrength) {
@@ -254,7 +254,7 @@ void CommandList::get_strongest_jedi()
 					newJedi = this->Planets[i].getJedis()[j];
 				}
 			}
-			std::cout << newJedi;
+			std::cout << newJedi << std::endl;
 			return;
 		}
 	}
@@ -317,7 +317,7 @@ void CommandList::get_youngest_jedi(const String& pname, const String& rank)
 
 void CommandList::get_youngest_jedi()
 {
-	String pname(16), rank(16);
+	String pname, rank;
 	std::cout << "Enter the planet's name: ";
 	std::cin >> pname;
 	std::cout << "Enter the jedi's rank: ";
@@ -391,7 +391,7 @@ void CommandList::get_most_used_saber_color(const String& pname, const String& r
 
 void CommandList::get_most_used_saber_color()
 {
-	String pname(16), rank(16);
+	String pname, rank;
 	std::cout << "Enter the planet's name: ";
 	std::cin >> pname;
 	std::cout << "Enter the jedi's rank: ";
@@ -450,7 +450,7 @@ void CommandList::print_planet(const String& pname)
 
 void CommandList::print_planet()
 {
-	String pname(16);
+	String pname;
 	std::cout << "Enter the planet's name: ";
 	std::cin >> pname;
 	if (this->Planets.isElementPresent(pname)) {
@@ -477,7 +477,7 @@ void CommandList::print_jedi(const String& jname)
 
 void CommandList::print_jedi()
 {
-	String jname(16);
+	String jname;
 	std::cout << "Enter the jedi's name: ";
 	std::cin >> jname;
 	for (size_t i = 0; i < this->Planets.getSize(); i++)
