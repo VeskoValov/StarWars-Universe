@@ -5,10 +5,6 @@ String::String()
 	this->capacity = 31;
 	this->size = 0;
 	this->data = new char[this->capacity];
-	for (size_t i = 0; i < this->capacity; ++i)
-	{
-		this->data[i] = '\0';
-	}
 }
 
 String::String(const String& other)
@@ -25,6 +21,12 @@ String& String::operator=(const String& other)
 	return *this;
 }
 
+String& String::operator=(const char* newData)
+{
+	this->setData(newData);
+	return *this;
+}
+
 String::String(size_t size) : String()
 {
 	this->setSize(size);
@@ -32,12 +34,7 @@ String::String(size_t size) : String()
 
 String::String(const char* data) : String()
 {
-	this->size = strlen(data);
-	this->checkForResize();
-	for (size_t i = 0; i < this->size; ++i)
-	{
-		this->data[i] = data[i];
-	}
+	this->setData(data);
 }
 
 String::~String()
@@ -49,6 +46,17 @@ void String::setSize(const size_t& size)
 {
 	this->size = size;
 	this->checkForResize();
+}
+
+void String::setData(const char* other)
+{
+	this->size = strlen(other);
+	if (this->size < capacity && this->data != nullptr) {
+		delete[] this->data;
+	}
+	checkForResize();
+	this->data = new char[this->capacity];
+	strcpy_s(this->data, this->size + 1, other);
 }
 
 char* String::getData() const
@@ -100,13 +108,17 @@ void String::copy(const String& other)
 {
 	this->capacity = other.capacity;
 	this->size = other.size;
-	this->checkForResize();
 	this->data = new char[other.capacity];
-	for (size_t i = 0; i < this->size; ++i)
-	{
-		this->data[i] = other.data[i];
-	}
+	strcpy_s(this->data, other.size + 1, other.data);
 }
+
+//void String::copy(const char* other)
+//{
+//	this->size = strlen(other);
+//	checkForResize();
+//	this->data = new char[this->capacity];
+//	strcpy_s(this->data, this->size + 1, other);
+//}
 
 void String::erase()
 {
@@ -117,21 +129,16 @@ void String::resize()
 {
 	this->capacity *= 3;
 	char* newData = new char[this->capacity];
-	for (size_t i = 0; i < this->capacity; ++i)
-	{
-		newData[i] = '\0';
+	strcpy_s(newData, this->capacity, this->data);
+	if (this->data != nullptr) {
+		delete[] this->data;
 	}
-	for (size_t i = 0; i < this->size; ++i)
-	{
-		newData[i] = this->data[i];
-	}
-	delete[] this->data;
 	this->data = newData;
 }
 
 void String::checkForResize()
 {
-	if (this->size >= this->capacity) {
+	while (this->size >= this->capacity) {
 		this->resize();
 	}
 }

@@ -25,7 +25,6 @@ void CommandList::run()
 	std::cout << "Welcome!" << std::endl;
 	while (this->working) {
 		std::cout << "Enter a command: ";
-		//std::cin.ignore();
 		std::cin >> command;
 		if (!(this->commandList.isElementPresent(command))) {
 			std::cout << "There is no command with that name! Try help for a list of commands." << std::endl;
@@ -77,9 +76,7 @@ void CommandList::create_jedi(const String& pname, const String& jname, const St
 	}
 	for (size_t i = 0; i < this->Planets.getSize(); ++i)
 	{
-		//Vector<Jedi> temp = this->Planets[i].getJedis();
 		if (this->Planets[i].getName() == pname) {
-			//this->Planets[i].getJedis().push_back(newJedi);
 			this->Planets[i].addJedi(newJedi);
 			std::cout << "You have successfully added a new Jedi!" << std::endl;
 			return;
@@ -223,7 +220,9 @@ void CommandList::get_strongest_jedi(const String& pname)
 	{
 		Jedi newJedi;
 		if (this->Planets[i].getName() == pname) {
-			for (size_t j = 0; j < this->Planets[i].getJedis().getSize(); ++j)
+			maxStrength = this->Planets[i].getJedis()[0].getPower();
+			newJedi = this->Planets[i].getJedis()[0];
+			for (size_t j = 1; j < this->Planets[i].getJedis().getSize(); ++j)
 			{
 				if (this->Planets[i].getJedis()[j].getPower() > maxStrength) {
 					maxStrength = this->Planets[i].getJedis()[j].getPower();
@@ -247,6 +246,8 @@ void CommandList::get_strongest_jedi()
 	{
 		Jedi newJedi;
 		if (this->Planets[i].getName() == pname) {
+			maxStrength = this->Planets[i].getJedis()[0].getPower();
+			newJedi = this->Planets[i].getJedis()[0];
 			for (size_t j = 0; j < this->Planets[i].getJedis().getSize(); ++j)
 			{
 				if (this->Planets[i].getJedis()[j].getPower() > maxStrength) {

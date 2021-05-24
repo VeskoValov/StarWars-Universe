@@ -6,11 +6,13 @@ public:
 	String(); //Част от Г4
 	String(const String&); //Част от Г4
 	String& operator=(const String&); //Част от Г4
+	String& operator=(const char*);
 	String(size_t size); //Задава начален размер на низа
 	String(const char* data); //Задава начална стойност на низа
 	~String(); //Част от Г4
 
 	void setSize(const size_t& size);
+	void setData(const char* other);
 	char* getData() const;
 	size_t getSize() const;
 	size_t getCapacity() const;
