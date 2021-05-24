@@ -25,7 +25,7 @@ void CommandList::run()
 	std::cout << "Welcome!" << std::endl;
 	while (this->working) {
 		std::cout << "Enter a command: ";
-		std::cin.ignore();
+		//std::cin.ignore();
 		std::cin >> command;
 		if (!(this->commandList.isElementPresent(command))) {
 			std::cout << "There is no command with that name! Try help for a list of commands." << std::endl;
@@ -61,7 +61,6 @@ void CommandList::add_planet()
 	std::cout << "Enter the planet's name: ";
 	String name(16);
 	std::cin >> name;
-	std::cout << std::endl;
 	Planet newPlanet(name);
 	Planets.push_back(newPlanet);
 	std::cout << "You have successfully added a new planet!" << std::endl;
@@ -80,7 +79,8 @@ void CommandList::create_jedi(const String& pname, const String& jname, const St
 	{
 		//Vector<Jedi> temp = this->Planets[i].getJedis();
 		if (this->Planets[i].getName() == pname) {
-			this->Planets[i].getJedis().push_back(newJedi);
+			//this->Planets[i].getJedis().push_back(newJedi);
+			this->Planets[i].addJedi(newJedi);
 			std::cout << "You have successfully added a new Jedi!" << std::endl;
 			return;
 		}
@@ -105,6 +105,7 @@ void CommandList::create_jedi()
 	std::cin >> age;
 	std::cout << "Enter the jedi's strength: ";
 	std::cin >> strength;
+	std::cin.ignore();
 	Jedi newJedi(jname, rank, age, saberColor, strength);
 	for (size_t i = 0; i < this->Planets.getSize(); ++i) {
 		if (this->Planets[i].getJedis().isElementPresent(newJedi)) {
@@ -114,9 +115,8 @@ void CommandList::create_jedi()
 	}
 	for (size_t i = 0; i < this->Planets.getSize(); ++i)
 	{
-		//Vector<Jedi> temp = this->Planets[i].getJedis();
 		if (this->Planets[i].getName() == pname) {
-			this->Planets[i].getJedis().push_back(newJedi);
+			this->Planets[i].addJedi(newJedi);
 			std::cout << "You have successfully added a new Jedi!" << std::endl;
 			return;
 		}
@@ -130,15 +130,7 @@ void CommandList::remove_jedi(const String& jname, const String& pname)
 	for (size_t i = 0; i < this->Planets.getSize(); ++i)
 	{
 		if (this->Planets[i].getName() == pname) {
-			if (this->Planets[i].getJedis().isElementPresent(newJedi)) {
-				this->Planets[i].getJedis().pop_by_index(this->Planets[i].getJedis().findElementIndex(newJedi));
-				std::cout << "The Jedi was successfully removed!" << std::endl;
-				return;
-			}
-			else {
-				std::cout << "There is no Jedi with such name on this planet!" << std::endl;
-				return;
-			}
+			this->Planets[i].removeJedi(newJedi);
 		}
 	}
 	std::cout << "There is no planet with such a name!" << std::endl;
@@ -155,15 +147,8 @@ void CommandList::remove_jedi()
 	for (size_t i = 0; i < this->Planets.getSize(); ++i)
 	{
 		if (this->Planets[i].getName() == pname) {
-			if (this->Planets[i].getJedis().isElementPresent(newJedi)) {
-				this->Planets[i].getJedis().pop_by_index(this->Planets[i].getJedis().findElementIndex(newJedi));
-				std::cout << "The Jedi was successfully removed!" << std::endl;
+				this->Planets[i].removeJedi(newJedi);
 				return;
-			}
-			else {
-				std::cout << "There is no Jedi with such name on this planet!" << std::endl;
-				return;
-			}
 		}
 	}
 	std::cout << "There is no planet with such a name!" << std::endl;
@@ -174,7 +159,7 @@ void CommandList::promote_jedi(const String& jname, const double& multiplier)
 	Jedi newJedi(jname);
 	for (size_t i = 0; i < this->Planets.getSize(); ++i) {
 		if (this->Planets[i].getJedis().isElementPresent(newJedi)) {
-			this->Planets[i].getJedis()[this->Planets[i].getJedis().findElementIndex(newJedi)].promote(multiplier);
+			this->Planets[i].promoteJedi(newJedi, multiplier);
 			return;
 		}
 	}
@@ -189,10 +174,11 @@ void CommandList::promote_jedi()
 	std::cin >> jname;
 	std::cout << "Enter the multiplier: ";
 	std::cin >> multiplier;
+	std::cin.ignore();
 	Jedi newJedi(jname);
 	for (size_t i = 0; i < this->Planets.getSize(); ++i) {
 		if (this->Planets[i].getJedis().isElementPresent(newJedi)) {
-			this->Planets[i].getJedis()[this->Planets[i].getJedis().findElementIndex(newJedi)].promote(multiplier);
+			this->Planets[i].promoteJedi(newJedi, multiplier);
 			return;
 		}
 	}
@@ -204,7 +190,7 @@ void CommandList::demote_jedi(const String& jname, const double& multiplier)
 	Jedi newJedi(jname);
 	for (size_t i = 0; i < this->Planets.getSize(); ++i) {
 		if (this->Planets[i].getJedis().isElementPresent(newJedi)) {
-			this->Planets[i].getJedis()[this->Planets[i].getJedis().findElementIndex(newJedi)].demote(multiplier);
+			this->Planets[i].demoteJedi(newJedi, multiplier);
 			return;
 		}
 	}
@@ -219,10 +205,11 @@ void CommandList::demote_jedi()
 	std::cin >> jname;
 	std::cout << "Enter the multiplier: ";
 	std::cin >> multiplier;
+	std::cin.ignore();
 	Jedi newJedi(jname);
 	for (size_t i = 0; i < this->Planets.getSize(); ++i) {
 		if (this->Planets[i].getJedis().isElementPresent(newJedi)) {
-			this->Planets[i].getJedis()[this->Planets[i].getJedis().findElementIndex(newJedi)].demote(multiplier);
+			this->Planets[i].demoteJedi(newJedi, multiplier);
 			return;
 		}
 	}

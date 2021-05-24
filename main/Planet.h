@@ -6,9 +6,13 @@ public:
 	Planet();
 	Planet(const String& name);
 	String getName() const;
-	Vector<Jedi>& getJedis();
+	const Vector<Jedi>& getJedis() const;
 
+	void addJedi(const Jedi& newJedi);
+	void removeJedi(const Jedi& oldJedi);
 	void setJedis(const Vector<Jedi> other);
+	void promoteJedi(const Jedi& newJedi, const double& multiplier);
+	void demoteJedi(const Jedi& newJedi, const double& multiplier);
 	void print() const;
 	bool operator==(const Planet& other);
 

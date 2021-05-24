@@ -2,7 +2,7 @@
 
 String::String()
 {
-	this->capacity = 30;
+	this->capacity = 31;
 	this->size = 0;
 	this->data = new char[this->capacity];
 	for (size_t i = 0; i < this->capacity; ++i)
@@ -145,9 +145,13 @@ std::ostream& operator<<(std::ostream& out, const String& other)
 	return out;
 }
 
-std::istream& operator>>(std::istream& in, const String& other)
+std::istream& operator>>(std::istream& in, String& other)
 {
-	in.getline(other.data, other.size);
+	in.getline(other.data, other.capacity);
+	other.size = strlen(other.data);
+	if (other.size == other.capacity - 1) {
+		other.resize();
+	}
 	/*for (size_t i = 0; i < other.size; i++)
 	{
 		in >> other.data[i];

@@ -17,14 +17,43 @@ String Planet::getName() const
 	return this->name;
 }
 
-Vector<Jedi>& Planet::getJedis()
+const Vector<Jedi>& Planet::getJedis() const
 {
 	return this->Jedis;
+}
+
+void Planet::addJedi(const Jedi& newJedi)
+{
+	this->Jedis.push_back(newJedi);
+}
+
+void Planet::removeJedi(const Jedi& oldJedi)
+{
+	if (this->Jedis.isElementPresent(oldJedi)) {
+		this->Jedis.pop_by_index(this->Jedis.findElementIndex(oldJedi));
+		std::cout << "The Jedi was successfully removed!" << std::endl;
+		return;
+	}
+	else {
+		std::cout << "There is no Jedi with such name on this planet!" << std::endl;
+		return;
+	}
+
 }
 
 void Planet::setJedis(const Vector<Jedi> other)
 {
 	this->Jedis = other;
+}
+
+void Planet::promoteJedi(const Jedi& newJedi, const double& multiplier)
+{
+	this->Jedis[this->Jedis.findElementIndex(newJedi)].promote(multiplier);
+}
+
+void Planet::demoteJedi(const Jedi& newJedi, const double& multiplier)
+{
+	this->Jedis[this->Jedis.findElementIndex(newJedi)].demote(multiplier);
 }
 
 void Planet::print() const
