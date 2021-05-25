@@ -3,7 +3,7 @@
 CommandList::CommandList()
 {
 	this->command = String::String();
-	this->Planets = Vector<Planet>::Vector();
+	this->planets = Vector<Planet>::Vector();
 	this->working = true;
 	this->commandList = Vector<String>::Vector();
 	this->commandList.push_back("add_planet");
@@ -50,7 +50,7 @@ void CommandList::run()
 void CommandList::add_planet(const String& name)
 {
 	Planet newPlanet(name);
-	Planets.push_back(newPlanet);
+	planets.push_back(newPlanet);
 	std::cout << "You have successfully added a planet!" << std::endl;
 }
 
@@ -60,23 +60,23 @@ void CommandList::add_planet()
 	String name;
 	std::cin >> name;
 	Planet newPlanet(name);
-	Planets.push_back(newPlanet);
+	planets.push_back(newPlanet);
 	std::cout << "You have successfully added a new planet!" << std::endl;
 }
 
 void CommandList::create_jedi(const String& pname, const String& jname, const String& rank, const size_t age, const String& saberColor, const double strength)
 {
 	Jedi newJedi(jname, rank, age, saberColor, strength);
-	for (size_t i = 0; i < this->Planets.getSize(); ++i) {
-		if (this->Planets[i].getJedis().isElementPresent(newJedi)) {
+	for (size_t i = 0; i < this->planets.getSize(); ++i) {
+		if (this->planets[i].getJedis().isElementPresent(newJedi)) {
 			std::cout << "There is already a jedi with the same name!" << std::endl;
 			return;
 		}
 	}
-	for (size_t i = 0; i < this->Planets.getSize(); ++i)
+	for (size_t i = 0; i < this->planets.getSize(); ++i)
 	{
-		if (this->Planets[i].getName() == pname) {
-			this->Planets[i].addJedi(newJedi);
+		if (this->planets[i].getName() == pname) {
+			this->planets[i].addJedi(newJedi);
 			std::cout << "You have successfully added a new Jedi!" << std::endl;
 			return;
 		}
@@ -103,16 +103,16 @@ void CommandList::create_jedi()
 	std::cin >> strength;
 	std::cin.ignore();
 	Jedi newJedi(jname, rank, age, saberColor, strength);
-	for (size_t i = 0; i < this->Planets.getSize(); ++i) {
-		if (this->Planets[i].getJedis().isElementPresent(newJedi)) {
+	for (size_t i = 0; i < this->planets.getSize(); ++i) {
+		if (this->planets[i].getJedis().isElementPresent(newJedi)) {
 			std::cout << "There is already a jedi with the same name!" << std::endl;
 			return;
 		}
 	}
-	for (size_t i = 0; i < this->Planets.getSize(); ++i)
+	for (size_t i = 0; i < this->planets.getSize(); ++i)
 	{
-		if (this->Planets[i].getName() == pname) {
-			this->Planets[i].addJedi(newJedi);
+		if (this->planets[i].getName() == pname) {
+			this->planets[i].addJedi(newJedi);
 			std::cout << "You have successfully added a new Jedi!" << std::endl;
 			return;
 		}
@@ -123,10 +123,10 @@ void CommandList::create_jedi()
 void CommandList::remove_jedi(const String& jname, const String& pname)
 {
 	Jedi newJedi(jname);
-	for (size_t i = 0; i < this->Planets.getSize(); ++i)
+	for (size_t i = 0; i < this->planets.getSize(); ++i)
 	{
-		if (this->Planets[i].getName() == pname) {
-			this->Planets[i].removeJedi(newJedi);
+		if (this->planets[i].getName() == pname) {
+			this->planets[i].removeJedi(newJedi);
 		}
 	}
 	std::cout << "There is no planet with such a name!" << std::endl;
@@ -140,10 +140,10 @@ void CommandList::remove_jedi()
 	std::cout << "Enter the planet's name: ";
 	std::cin >> pname;
 	Jedi newJedi(jname);
-	for (size_t i = 0; i < this->Planets.getSize(); ++i)
+	for (size_t i = 0; i < this->planets.getSize(); ++i)
 	{
-		if (this->Planets[i].getName() == pname) {
-				this->Planets[i].removeJedi(newJedi);
+		if (this->planets[i].getName() == pname) {
+				this->planets[i].removeJedi(newJedi);
 				return;
 		}
 	}
@@ -153,9 +153,9 @@ void CommandList::remove_jedi()
 void CommandList::promote_jedi(const String& jname, const double& multiplier)
 {
 	Jedi newJedi(jname);
-	for (size_t i = 0; i < this->Planets.getSize(); ++i) {
-		if (this->Planets[i].getJedis().isElementPresent(newJedi)) {
-			this->Planets[i].promoteJedi(newJedi, multiplier);
+	for (size_t i = 0; i < this->planets.getSize(); ++i) {
+		if (this->planets[i].getJedis().isElementPresent(newJedi)) {
+			this->planets[i].promoteJedi(newJedi, multiplier);
 			return;
 		}
 	}
@@ -172,9 +172,9 @@ void CommandList::promote_jedi()
 	std::cin >> multiplier;
 	std::cin.ignore();
 	Jedi newJedi(jname);
-	for (size_t i = 0; i < this->Planets.getSize(); ++i) {
-		if (this->Planets[i].getJedis().isElementPresent(newJedi)) {
-			this->Planets[i].promoteJedi(newJedi, multiplier);
+	for (size_t i = 0; i < this->planets.getSize(); ++i) {
+		if (this->planets[i].getJedis().isElementPresent(newJedi)) {
+			this->planets[i].promoteJedi(newJedi, multiplier);
 			return;
 		}
 	}
@@ -184,9 +184,9 @@ void CommandList::promote_jedi()
 void CommandList::demote_jedi(const String& jname, const double& multiplier)
 {
 	Jedi newJedi(jname);
-	for (size_t i = 0; i < this->Planets.getSize(); ++i) {
-		if (this->Planets[i].getJedis().isElementPresent(newJedi)) {
-			this->Planets[i].demoteJedi(newJedi, multiplier);
+	for (size_t i = 0; i < this->planets.getSize(); ++i) {
+		if (this->planets[i].getJedis().isElementPresent(newJedi)) {
+			this->planets[i].demoteJedi(newJedi, multiplier);
 			return;
 		}
 	}
@@ -203,9 +203,9 @@ void CommandList::demote_jedi()
 	std::cin >> multiplier;
 	std::cin.ignore();
 	Jedi newJedi(jname);
-	for (size_t i = 0; i < this->Planets.getSize(); ++i) {
-		if (this->Planets[i].getJedis().isElementPresent(newJedi)) {
-			this->Planets[i].demoteJedi(newJedi, multiplier);
+	for (size_t i = 0; i < this->planets.getSize(); ++i) {
+		if (this->planets[i].getJedis().isElementPresent(newJedi)) {
+			this->planets[i].demoteJedi(newJedi, multiplier);
 			return;
 		}
 	}
@@ -215,17 +215,17 @@ void CommandList::demote_jedi()
 void CommandList::get_strongest_jedi(const String& pname)
 {
 	double maxStrength = 0;
-	for (size_t i = 0; i < this->Planets.getSize(); ++i)
+	for (size_t i = 0; i < this->planets.getSize(); ++i)
 	{
 		Jedi newJedi;
-		if (this->Planets[i].getName() == pname) {
-			maxStrength = this->Planets[i].getJedis()[0].getPower();
-			newJedi = this->Planets[i].getJedis()[0];
-			for (size_t j = 1; j < this->Planets[i].getJedis().getSize(); ++j)
+		if (this->planets[i].getName() == pname) {
+			maxStrength = this->planets[i].getJedis()[0].getPower();
+			newJedi = this->planets[i].getJedis()[0];
+			for (size_t j = 1; j < this->planets[i].getJedis().getSize(); ++j)
 			{
-				if (this->Planets[i].getJedis()[j].getPower() > maxStrength) {
-					maxStrength = this->Planets[i].getJedis()[j].getPower();
-					newJedi = this->Planets[i].getJedis()[j];
+				if (this->planets[i].getJedis()[j].getPower() > maxStrength) {
+					maxStrength = this->planets[i].getJedis()[j].getPower();
+					newJedi = this->planets[i].getJedis()[j];
 				}
 			}
 			std::cout << newJedi;
@@ -241,17 +241,17 @@ void CommandList::get_strongest_jedi()
 	std::cout << "Enter the planet's name: ";
 	std::cin >> pname;
 	double maxStrength = 0;
-	for (size_t i = 0; i < this->Planets.getSize(); ++i)
+	for (size_t i = 0; i < this->planets.getSize(); ++i)
 	{
 		Jedi newJedi;
-		if (this->Planets[i].getName() == pname) {
-			maxStrength = this->Planets[i].getJedis()[0].getPower();
-			newJedi = this->Planets[i].getJedis()[0];
-			for (size_t j = 0; j < this->Planets[i].getJedis().getSize(); ++j)
+		if (this->planets[i].getName() == pname) {
+			maxStrength = this->planets[i].getJedis()[0].getPower();
+			newJedi = this->planets[i].getJedis()[0];
+			for (size_t j = 0; j < this->planets[i].getJedis().getSize(); ++j)
 			{
-				if (this->Planets[i].getJedis()[j].getPower() > maxStrength) {
-					maxStrength = this->Planets[i].getJedis()[j].getPower();
-					newJedi = this->Planets[i].getJedis()[j];
+				if (this->planets[i].getJedis()[j].getPower() > maxStrength) {
+					maxStrength = this->planets[i].getJedis()[j].getPower();
+					newJedi = this->planets[i].getJedis()[j];
 				}
 			}
 			std::cout << newJedi << std::endl;
@@ -264,20 +264,20 @@ void CommandList::get_strongest_jedi()
 void CommandList::get_youngest_jedi(const String& pname, const String& rank)
 {
 	Planet newPlanet(pname);
-	if (this->Planets.isElementPresent(pname)) {
+	if (this->planets.isElementPresent(pname)) {
 		Vector<Jedi> youngJedis;
 		Jedi newJedi;
 		size_t age = INT_MAX;
 		bool thereIsJedi = false;
-		size_t planetIndex = this->Planets.findElementIndex(pname);
-		for (size_t i = 0; i < this->Planets[planetIndex].getJedis().getSize(); ++i)
+		size_t planetIndex = this->planets.findElementIndex(pname);
+		for (size_t i = 0; i < this->planets[planetIndex].getJedis().getSize(); ++i)
 		{
-			youngJedis = this->Planets[planetIndex].getJedis();
+			youngJedis = this->planets[planetIndex].getJedis();
 			youngJedis.sort(byName);
-			this->Planets[planetIndex].setJedis(youngJedis);
-			if (this->Planets[planetIndex].getJedis()[i].getRank() == rank && this->Planets[planetIndex].getJedis()[i].getAge() < age) {
-				newJedi = this->Planets[planetIndex].getJedis()[i];
-				age = this->Planets[planetIndex].getJedis()[i].getAge();
+			this->planets[planetIndex].setJedis(youngJedis);
+			if (this->planets[planetIndex].getJedis()[i].getRank() == rank && this->planets[planetIndex].getJedis()[i].getAge() < age) {
+				newJedi = this->planets[planetIndex].getJedis()[i];
+				age = this->planets[planetIndex].getJedis()[i].getAge();
 				thereIsJedi = true;
 			}
 			/*else if (this->Planets[planetIndex].getJedis()[i].getRank() == rank && this->Planets[planetIndex].getJedis()[i].getAge() == age) {
@@ -326,20 +326,20 @@ void CommandList::get_youngest_jedi()
 	std::cout << "Enter the jedi's rank: ";
 	std::cin >> rank;
 	Planet newPlanet(pname);
-	if (this->Planets.isElementPresent(pname)) {
+	if (this->planets.isElementPresent(pname)) {
 		Vector<Jedi> youngJedis;
 		Jedi newJedi;
 		size_t age = INT_MAX;
 		bool thereIsJedi = false;
-		size_t planetIndex = this->Planets.findElementIndex(pname);
-		for (size_t i = 0; i < this->Planets[planetIndex].getJedis().getSize(); ++i)
+		size_t planetIndex = this->planets.findElementIndex(pname);
+		for (size_t i = 0; i < this->planets[planetIndex].getJedis().getSize(); ++i)
 		{
-			youngJedis = this->Planets[planetIndex].getJedis();
+			youngJedis = this->planets[planetIndex].getJedis();
 			youngJedis.sort(byName);
-			this->Planets[planetIndex].setJedis(youngJedis);
-			if (this->Planets[planetIndex].getJedis()[i].getRank() == rank && this->Planets[planetIndex].getJedis()[i].getAge() < age) {
-				newJedi = this->Planets[planetIndex].getJedis()[i];
-				age = this->Planets[planetIndex].getJedis()[i].getAge();
+			this->planets[planetIndex].setJedis(youngJedis);
+			if (this->planets[planetIndex].getJedis()[i].getRank() == rank && this->planets[planetIndex].getJedis()[i].getAge() < age) {
+				newJedi = this->planets[planetIndex].getJedis()[i];
+				age = this->planets[planetIndex].getJedis()[i].getAge();
 				thereIsJedi = true;
 			}
 		}
@@ -355,16 +355,16 @@ void CommandList::get_youngest_jedi()
 
 void CommandList::get_most_used_saber_color(const String& pname, const String& rank)
 {
-	if (this->Planets.isElementPresent(pname)) {
-		size_t PlanetIndex = this->Planets.findElementIndex(pname);
+	if (this->planets.isElementPresent(pname)) {
+		size_t PlanetIndex = this->planets.findElementIndex(pname);
 		Vector<String> colors;
 		Vector<Jedi> correctRank;
-		for (size_t i = 0; i < this->Planets[PlanetIndex].getJedis().getSize(); ++i)
+		for (size_t i = 0; i < this->planets[PlanetIndex].getJedis().getSize(); ++i)
 		{
-			if (this->Planets[PlanetIndex].getJedis()[i].getRank() == rank) {
-				correctRank.push_back(this->Planets[PlanetIndex].getJedis()[i]);
-				if (!(colors.isElementPresent(this->Planets[PlanetIndex].getJedis()[i].getColor()))) {
-					colors.push_back(this->Planets[PlanetIndex].getJedis()[i].getColor());
+			if (this->planets[PlanetIndex].getJedis()[i].getRank() == rank) {
+				correctRank.push_back(this->planets[PlanetIndex].getJedis()[i]);
+				if (!(colors.isElementPresent(this->planets[PlanetIndex].getJedis()[i].getColor()))) {
+					colors.push_back(this->planets[PlanetIndex].getJedis()[i].getColor());
 				}
 			}
 		}
@@ -402,16 +402,16 @@ void CommandList::get_most_used_saber_color()
 	std::cin >> pname;
 	std::cout << "Enter the jedi's rank: ";
 	std::cin >> rank;
-	if (this->Planets.isElementPresent(pname)) {
-		size_t PlanetIndex = this->Planets.findElementIndex(pname);
+	if (this->planets.isElementPresent(pname)) {
+		size_t PlanetIndex = this->planets.findElementIndex(pname);
 		Vector<String> colors;
 		Vector<Jedi> correctRank;
-		for (size_t i = 0; i < this->Planets[PlanetIndex].getJedis().getSize(); ++i)
+		for (size_t i = 0; i < this->planets[PlanetIndex].getJedis().getSize(); ++i)
 		{
-			if (this->Planets[PlanetIndex].getJedis()[i].getRank() == rank) {
-				correctRank.push_back(this->Planets[PlanetIndex].getJedis()[i]);
-				if (!(colors.isElementPresent(this->Planets[PlanetIndex].getJedis()[i].getColor()))) {
-					colors.push_back(this->Planets[PlanetIndex].getJedis()[i].getColor());
+			if (this->planets[PlanetIndex].getJedis()[i].getRank() == rank) {
+				correctRank.push_back(this->planets[PlanetIndex].getJedis()[i]);
+				if (!(colors.isElementPresent(this->planets[PlanetIndex].getJedis()[i].getColor()))) {
+					colors.push_back(this->planets[PlanetIndex].getJedis()[i].getColor());
 				}
 			}
 		}
@@ -444,8 +444,8 @@ void CommandList::get_most_used_saber_color()
 
 void CommandList::print_planet(const String& pname)
 {
-	if (this->Planets.isElementPresent(pname)) {
-		this->Planets[this->Planets.findElementIndex(pname)].print();
+	if (this->planets.isElementPresent(pname)) {
+		this->planets[this->planets.findElementIndex(pname)].print();
 	}
 	else
 	{
@@ -459,8 +459,8 @@ void CommandList::print_planet()
 	String pname;
 	std::cout << "Enter the planet's name: ";
 	std::cin >> pname;
-	if (this->Planets.isElementPresent(pname)) {
-		this->Planets[this->Planets.findElementIndex(pname)].print();
+	if (this->planets.isElementPresent(pname)) {
+		this->planets[this->planets.findElementIndex(pname)].print();
 	}
 	else
 	{
@@ -470,11 +470,11 @@ void CommandList::print_planet()
 
 void CommandList::print_jedi(const String& jname)
 {
-	for (size_t i = 0; i < this->Planets.getSize(); i++)
+	for (size_t i = 0; i < this->planets.getSize(); i++)
 	{
-		if (this->Planets[i].getJedis().isElementPresent(jname)) {
-			std::cout << "Planet: " << this->Planets[i] << std::endl;
-			std::cout << this->Planets[i].getJedis()[this->Planets[i].getJedis().findElementIndex(jname)] << std::endl;
+		if (this->planets[i].getJedis().isElementPresent(jname)) {
+			std::cout << "Planet: " << this->planets[i] << std::endl;
+			std::cout << this->planets[i].getJedis()[this->planets[i].getJedis().findElementIndex(jname)] << std::endl;
 			return;
 		}
 	}
@@ -486,11 +486,11 @@ void CommandList::print_jedi()
 	String jname;
 	std::cout << "Enter the jedi's name: ";
 	std::cin >> jname;
-	for (size_t i = 0; i < this->Planets.getSize(); i++)
+	for (size_t i = 0; i < this->planets.getSize(); i++)
 	{
-		if (this->Planets[i].getJedis().isElementPresent(jname)) {
-			std::cout << "Planet: " << this->Planets[i] << std::endl;
-			std::cout << this->Planets[i].getJedis()[this->Planets[i].getJedis().findElementIndex(jname)] << std::endl;
+		if (this->planets[i].getJedis().isElementPresent(jname)) {
+			std::cout << "Planet: " << this->planets[i] << std::endl;
+			std::cout << this->planets[i].getJedis()[this->planets[i].getJedis().findElementIndex(jname)] << std::endl;
 			return;
 		}
 	}
@@ -499,5 +499,5 @@ void CommandList::print_jedi()
 
 Vector<Planet>& CommandList::getPlanets()
 {
-	return this->Planets;
+	return this->planets;
 }

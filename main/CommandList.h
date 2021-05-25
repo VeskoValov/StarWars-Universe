@@ -31,7 +31,7 @@ public:
 private:
 	String command;
 	Vector<String> commandList;
-	Vector<Planet> Planets;
+	Vector<Planet> planets;
 	bool working;
 };
 

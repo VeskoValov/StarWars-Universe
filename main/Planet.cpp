@@ -3,7 +3,7 @@
 Planet::Planet()
 {
 	this->name = "Unknown";
-	this->Jedis = Vector<Jedi>::Vector();
+	this->jedis = Vector<Jedi>::Vector();
 }
 
 Planet::Planet(const String& name) : Planet()
@@ -19,18 +19,18 @@ String Planet::getName() const
 
 const Vector<Jedi>& Planet::getJedis() const
 {
-	return this->Jedis;
+	return this->jedis;
 }
 
 void Planet::addJedi(const Jedi& newJedi)
 {
-	this->Jedis.push_back(newJedi);
+	this->jedis.push_back(newJedi);
 }
 
 void Planet::removeJedi(const Jedi& oldJedi)
 {
-	if (this->Jedis.isElementPresent(oldJedi)) {
-		this->Jedis.pop_by_index(this->Jedis.findElementIndex(oldJedi));
+	if (this->jedis.isElementPresent(oldJedi)) {
+		this->jedis.pop_by_index(this->jedis.findElementIndex(oldJedi));
 		std::cout << "The Jedi was successfully removed!" << std::endl;
 		return;
 	}
@@ -43,23 +43,23 @@ void Planet::removeJedi(const Jedi& oldJedi)
 
 void Planet::setJedis(const Vector<Jedi> other)
 {
-	this->Jedis = other;
+	this->jedis = other;
 }
 
 void Planet::promoteJedi(const Jedi& newJedi, const double& multiplier)
 {
-	this->Jedis[this->Jedis.findElementIndex(newJedi)].promote(multiplier);
+	this->jedis[this->jedis.findElementIndex(newJedi)].promote(multiplier);
 }
 
 void Planet::demoteJedi(const Jedi& newJedi, const double& multiplier)
 {
-	this->Jedis[this->Jedis.findElementIndex(newJedi)].demote(multiplier);
+	this->jedis[this->jedis.findElementIndex(newJedi)].demote(multiplier);
 }
 
 void Planet::print() const
 {
 	std::cout << "Name: " << this->name << std::endl;
-	this->Jedis.print();
+	this->jedis.print();
 }
 
 bool Planet::operator==(const Planet& other)

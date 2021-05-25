@@ -19,6 +19,6 @@ public:
 	friend std::ostream& operator<<(std::ostream& out, const Planet& other);
 private:
 	String name;
-	Vector<Jedi> Jedis;
+	Vector<Jedi> jedis;
 };
 
