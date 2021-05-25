@@ -493,7 +493,11 @@ void CommandList::get_most_used_saber_color_grand()
 void CommandList::print_planet(const String& pname)
 {
 	if (this->planets.isElementPresent(pname)) {
-		this->planets[this->planets.findElementIndex(pname)].print();
+		size_t planetIndex = this->planets.findElementIndex(pname);
+		Vector<Jedi> sortedJedis = this->planets[planetIndex].getJedis();
+		sortedJedis.sort(byNameAndRank);
+		this->planets[planetIndex].setJedis(sortedJedis);
+		this->planets[planetIndex].print();
 	}
 	else
 	{
@@ -508,7 +512,11 @@ void CommandList::print_planet()
 	std::cout << "Enter the planet's name: ";
 	std::cin >> pname;
 	if (this->planets.isElementPresent(pname)) {
-		this->planets[this->planets.findElementIndex(pname)].print();
+		size_t planetIndex = this->planets.findElementIndex(pname);
+		Vector<Jedi> sortedJedis = this->planets[planetIndex].getJedis();
+		sortedJedis.sort(byNameAndRank);
+		this->planets[planetIndex].setJedis(sortedJedis);
+		this->planets[planetIndex].print();
 	}
 	else
 	{

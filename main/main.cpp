@@ -11,14 +11,14 @@ int main()
 	a.sort(byName);
 	a.print();*/
 	CommandList a;
-	a.run();
+	//a.run();
 	//a.add_planet("Earth");
-	/*a.add_planet("Mars");
+	a.add_planet("Mars");
 	a.create_jedi("Mars", "Vesko", "PADAWAN", 20, "red", 3);
-	a.create_jedi("Mars", "Alex", "PADAWAN", 20, "blue", 7);
-	a.create_jedi("Mars", "Dobri", "PADAWAN", 20, "blue", 6);
-	a.get_youngest_jedi("Mars", "PADAWAN");
-	a.print_planet("Mars");*/
+	a.create_jedi("Mars", "Alex", "KNIGHT", 20, "blue", 7);
+	a.create_jedi("Mars", "Dobri", "KNIGHT", 20, "blue", 6);
+	//a.get_youngest_jedi("Mars", "PADAWAN");
+	a.print_planet("Mars");
 	//a.remove_jedi("Gosho", "Mars");
 	//a.promote_jedi("Vesko", 10);
 	//a.demote_jedi("Vesko", 1);

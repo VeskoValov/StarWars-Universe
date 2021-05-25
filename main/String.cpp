@@ -76,11 +76,11 @@ size_t String::getCapacity() const
 
 bool String::operator==(const String& newString)
 {
-	return strcmp(this->data, newString.data) == 0;
-	/*if (this->size != newString.size) {
+	if (this->size != newString.size) {
 		return false;
 	}
-	for (size_t i = 0; i < this->size; ++i)
+	return strcmp(this->data, newString.data) == 0;
+	/*for (size_t i = 0; i < this->size; ++i)
 	{
 		if (data[i] != newString.data[i]) {
 			return false;

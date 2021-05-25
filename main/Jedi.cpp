@@ -90,6 +90,11 @@ String Jedi::getRank() const
 	return this->currentRank;
 }
 
+size_t Jedi::getRankNumber() const
+{
+	return this->ranks.findElementIndex(this->currentRank);
+}
+
 size_t Jedi::getAge() const
 {
 	return this->age;

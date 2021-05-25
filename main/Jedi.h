@@ -18,6 +18,7 @@ public:
 
 	String getName() const;
 	String getRank() const;
+	size_t getRankNumber() const;
 	size_t getAge() const;
 	String getColor() const;
 	double getPower() const;
