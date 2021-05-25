@@ -272,6 +272,9 @@ void CommandList::get_youngest_jedi(const String& pname, const String& rank)
 		size_t planetIndex = this->Planets.findElementIndex(pname);
 		for (size_t i = 0; i < this->Planets[planetIndex].getJedis().getSize(); ++i)
 		{
+			youngJedis = this->Planets[planetIndex].getJedis();
+			youngJedis.sort(byName);
+			this->Planets[planetIndex].setJedis(youngJedis);
 			if (this->Planets[planetIndex].getJedis()[i].getRank() == rank && this->Planets[planetIndex].getJedis()[i].getAge() < age) {
 				newJedi = this->Planets[planetIndex].getJedis()[i];
 				age = this->Planets[planetIndex].getJedis()[i].getAge();
@@ -331,6 +334,9 @@ void CommandList::get_youngest_jedi()
 		size_t planetIndex = this->Planets.findElementIndex(pname);
 		for (size_t i = 0; i < this->Planets[planetIndex].getJedis().getSize(); ++i)
 		{
+			youngJedis = this->Planets[planetIndex].getJedis();
+			youngJedis.sort(byName);
+			this->Planets[planetIndex].setJedis(youngJedis);
 			if (this->Planets[planetIndex].getJedis()[i].getRank() == rank && this->Planets[planetIndex].getJedis()[i].getAge() < age) {
 				newJedi = this->Planets[planetIndex].getJedis()[i];
 				age = this->Planets[planetIndex].getJedis()[i].getAge();

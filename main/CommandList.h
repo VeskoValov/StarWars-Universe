@@ -1,5 +1,6 @@
 #pragma once
 #include "Planet.h"
+#include "Comparators.h"
 class CommandList
 {
 public:

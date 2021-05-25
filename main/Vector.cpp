@@ -1,3 +1,4 @@
+#pragma once
 #include "Vector.h"
 
 template<typename T>
@@ -166,4 +167,19 @@ void Vector<T>::pop_by_index(const size_t& index)
 	--this->size;
 	delete[] elements;
 	this->elements = temp;
+}
+
+template<typename T>
+void Vector<T>::sort(bool(*comparator)(const T& element1, const T& element2))
+{
+	for (int i = 0; i < this->size - 1; ++i)
+	{
+		for (int j = 0; j < this->size - i - 1; ++j)
+		{
+			if (comparator(elements[j], elements[j + 1]))
+			{
+				std::swap(elements[j], elements[j + 1]);
+			}
+		}
+	}
 }

@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CommandList.cpp" />
+    <ClCompile Include="Comparators.cpp" />
     <ClCompile Include="Jedi.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Planet.cpp" />
@@ -149,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommandList.h" />
+    <ClInclude Include="Comparators.h" />
     <ClInclude Include="Jedi.h" />
     <ClInclude Include="Planet.h" />
     <ClInclude Include="PlanetRepository.h" />
