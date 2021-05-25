@@ -22,6 +22,7 @@ public:
 	void get_youngest_jedi();
 	void get_most_used_saber_color(const String& pname, const String& rank);
 	void get_most_used_saber_color();
+	void get_most_used_saber_color_grand();
 	void print_planet(const String& pname);
 	void print_planet();
 	void print_jedi(const String& jname);

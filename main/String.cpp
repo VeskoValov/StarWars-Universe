@@ -2,7 +2,7 @@
 
 String::String()
 {
-	this->capacity = 31;
+	this->capacity = 32;
 	this->size = 0;
 	this->data = new char[this->capacity];
 }
@@ -76,13 +76,17 @@ size_t String::getCapacity() const
 
 bool String::operator==(const String& newString)
 {
+	return strcmp(this->data, newString.data) == 0;
+	/*if (this->size != newString.size) {
+		return false;
+	}
 	for (size_t i = 0; i < this->size; ++i)
 	{
 		if (data[i] != newString.data[i]) {
 			return false;
 		}
 	}
-	return true;
+	return true;*/
 }
 
 bool String::operator>(const String& other) const

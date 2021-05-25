@@ -170,7 +170,7 @@ void Vector<T>::pop_by_index(const size_t& index)
 }
 
 template<typename T>
-void Vector<T>::sort(bool(*comparator)(const T& element1, const T& element2))
+void Vector<T>::sort(bool(comparator)(const T& element1, const T& element2))
 {
 	for (int i = 0; i < this->size - 1; ++i)
 	{

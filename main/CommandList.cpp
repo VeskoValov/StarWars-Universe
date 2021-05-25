@@ -6,17 +6,18 @@ CommandList::CommandList()
 	this->planets = Vector<Planet>::Vector();
 	this->working = true;
 	this->commandList = Vector<String>::Vector();
-	this->commandList.push_back("add_planet");
-	this->commandList.push_back("create_jedi");
-	this->commandList.push_back("remove_jedi");
-	this->commandList.push_back("promote_jedi");
-	this->commandList.push_back("demote_jedi");
-	this->commandList.push_back("get_strongest_jedi");
-	this->commandList.push_back("get_youngest_jedi");
-	this->commandList.push_back("get_most_used_saber_color");
-	this->commandList.push_back("print_planet");
-	this->commandList.push_back("print_jedi");
-	this->commandList.push_back("help");
+	this->commandList.push_back("add_planet"); // 0
+	this->commandList.push_back("create_jedi"); // 1
+	this->commandList.push_back("remove_jedi"); // 2
+	this->commandList.push_back("promote_jedi"); // 3
+	this->commandList.push_back("demote_jedi"); // 4
+	this->commandList.push_back("get_strongest_jedi"); // 5
+	this->commandList.push_back("get_youngest_jedi"); // 6
+	this->commandList.push_back("get_most_used_saber_color"); // 7
+	this->commandList.push_back("get_most_used_saber_color_grand"); // 8
+	this->commandList.push_back("print_planet"); // 9
+	this->commandList.push_back("print_jedi"); // 10
+	this->commandList.push_back("help"); // 11
 }
 
 void CommandList::run()
@@ -40,9 +41,10 @@ void CommandList::run()
 		case 5: get_strongest_jedi(); break;
 		case 6: get_youngest_jedi(); break;
 		case 7: get_most_used_saber_color(); break;
-		case 8: print_planet(); break;
-		case 9: print_jedi(); break;
-		//case 8: help(); break;
+		case 8: get_most_used_saber_color_grand(); break;
+		case 9: print_planet(); break;
+		case 10: print_jedi(); break;
+		//case 11: help(); break;
 		}
 	}
 }
@@ -417,6 +419,52 @@ void CommandList::get_most_used_saber_color()
 		}
 		if (correctRank.getSize() == 0) {
 			std::cout << "There is no Jedi with that rank!" << std::endl;
+			return;
+		}
+		size_t maxColorCount = 0;
+		String currentColor;
+		size_t currentCount = 0;
+		for (size_t i = 0; i < colors.getSize(); ++i)
+		{
+			currentCount = 0;
+			for (size_t j = 0; j < correctRank.getSize(); ++j)
+			{
+				if (colors[i] == correctRank[j].getColor()) {
+					++currentCount;
+				}
+			}
+			if (maxColorCount < currentCount) {
+				maxColorCount = currentCount;
+				currentColor = colors[i];
+			}
+		}
+		std::cout << currentColor << std::endl;
+		return;
+	}
+	std::cout << "There is no planet with that name!" << std::endl;
+}
+
+void CommandList::get_most_used_saber_color_grand()
+{
+	String pname, rank;
+	std::cout << "Enter the planet's name: ";
+	std::cin >> pname;
+	rank = "GRANDMASTER";
+	if (this->planets.isElementPresent(pname)) {
+		size_t PlanetIndex = this->planets.findElementIndex(pname);
+		Vector<String> colors;
+		Vector<Jedi> correctRank;
+		for (size_t i = 0; i < this->planets[PlanetIndex].getJedis().getSize(); ++i)
+		{
+			if (this->planets[PlanetIndex].getJedis()[i].getRank() == rank) {
+				correctRank.push_back(this->planets[PlanetIndex].getJedis()[i]);
+				if (!(colors.isElementPresent(this->planets[PlanetIndex].getJedis()[i].getColor()))) {
+					colors.push_back(this->planets[PlanetIndex].getJedis()[i].getColor());
+				}
+			}
+		}
+		if (correctRank.getSize() == 0) {
+			std::cout << "There is no Jedi with GRANDMASTER rank!" << std::endl;
 			return;
 		}
 		size_t maxColorCount = 0;
