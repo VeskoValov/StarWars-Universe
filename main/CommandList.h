@@ -25,6 +25,8 @@ public:
 	void get_most_used_saber_color_grand();
 	void print_planet(const String& pname);
 	void print_planet();
+	void print_planets(const String& firstPName, const String& secondPName);
+	void print_planets();
 	void print_jedi(const String& jname);
 	void print_jedi();
 

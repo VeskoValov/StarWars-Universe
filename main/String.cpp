@@ -74,7 +74,7 @@ size_t String::getCapacity() const
 	return this->capacity;
 }
 
-bool String::operator==(const String& newString)
+bool String::operator==(const String& newString) const
 {
 	if (this->size != newString.size) {
 		return false;

@@ -108,6 +108,28 @@ const T& Vector<T>::operator[](size_t index) const
 }
 
 template<typename T>
+Vector<T> Vector<T>::operator+(const Vector<T>& other)
+{
+	Vector<T> newVector;
+	for (size_t i = 0; i < this->size; ++i)
+	{
+		newVector.push_back(this->elements[i]);
+	}
+	for (size_t i = 0; i < other.size; ++i)
+	{
+		newVector.push_back(other.elements[i]);
+	}
+	return newVector;
+}
+
+template<typename T>
+Vector<T>& Vector<T>::operator+=(const Vector<T>& other)
+{
+	*this = *this + other;
+	return *this;
+}
+
+template<typename T>
 size_t Vector<T>::getSize() const
 {
 	return this->size;

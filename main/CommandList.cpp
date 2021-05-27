@@ -16,8 +16,10 @@ CommandList::CommandList()
 	this->commandList.push_back("get_most_used_saber_color"); // 7
 	this->commandList.push_back("get_most_used_saber_color_grand"); // 8
 	this->commandList.push_back("print_planet"); // 9
-	this->commandList.push_back("print_jedi"); // 10
-	this->commandList.push_back("help"); // 11
+	this->commandList.push_back("print_planets"); // 10
+	this->commandList.push_back("print_jedi"); // 11
+	this->commandList.push_back("help"); // 12
+	this->commandList.push_back("exit"); // 13
 }
 
 void CommandList::run()
@@ -43,8 +45,10 @@ void CommandList::run()
 		case 7: get_most_used_saber_color(); break;
 		case 8: get_most_used_saber_color_grand(); break;
 		case 9: print_planet(); break;
-		case 10: print_jedi(); break;
-		//case 11: help(); break;
+		case 10: print_planets(); break;
+		case 11: print_jedi(); break;
+		//case 12: help(); break;
+		case 13: exit(0); break;
 		}
 	}
 }
@@ -282,33 +286,6 @@ void CommandList::get_youngest_jedi(const String& pname, const String& rank)
 				age = this->planets[planetIndex].getJedis()[i].getAge();
 				thereIsJedi = true;
 			}
-			/*else if (this->Planets[planetIndex].getJedis()[i].getRank() == rank && this->Planets[planetIndex].getJedis()[i].getAge() == age) {
-				youngJedis.push_back(this->Planets[planetIndex].getJedis()[i]);
-				youngJedis.push_back(newJedi);
-				thereIsJedi = true;
-			}
-		}
-		if (youngJedis.isElementPresent(newJedi)) {
-			size_t asciiCode = 'Z';
-			for (size_t i = 0; i < youngJedis.getSize(); ++i)
-			{
-				size_t charIndex = 0;
-				if (asciiCode < youngJedis[i].getName()[charIndex]) {
-					asciiCode = youngJedis[i].getName()[charIndex];
-					newJedi = youngJedis[i];
-				}
-				if (asciiCode == youngJedis[i].getName()[charIndex]) {
-
-					for (charIndex = 1; charIndex < youngJedis[i].getName().getSize(); ++charIndex)
-					{
-						asciiCode = newJedi.getName()[charIndex];
-						if (asciiCode < youngJedis[i].getName()[charIndex]) {
-							asciiCode = youngJedis[i].getName()[0];
-							newJedi = youngJedis[i];
-						}
-					}
-				}
-			}*/
 		}
 		if (!thereIsJedi) {
 			std::cout << "There is no Jedi with that rank!" << std::endl;
@@ -521,6 +498,78 @@ void CommandList::print_planet()
 	else
 	{
 		std::cout << "There is no planet with that name!" << std::endl;
+	}
+}
+
+void CommandList::print_planets(const String& firstPName, const String& secondPName)
+{
+	Vector<Jedi> JedisFromBoth;
+	if (this->planets.isElementPresent(firstPName)) {
+		JedisFromBoth = this->planets[this->planets.findElementIndex(firstPName)].getJedis();
+		if (firstPName == secondPName) {
+			std::cout << "Both names are the same, therefore result shown is only from " << firstPName << std::endl;
+			JedisFromBoth.sort(byName);
+			JedisFromBoth.print();
+		}
+		else if (this->planets.isElementPresent(secondPName)) {
+			JedisFromBoth += this->planets[this->planets.findElementIndex(secondPName)].getJedis();
+			JedisFromBoth.sort(byName);
+			std::cout << "The jedis from " << firstPName << " and " << secondPName << " in alphabetical order are: " << std::endl;
+			JedisFromBoth.print();
+		}
+		else {
+			std::cout << secondPName << " is not present in the database! Therefore only " << firstPName << " will be printed!" << std::endl;
+			JedisFromBoth.sort(byName);
+			JedisFromBoth.print();
+		}
+	}
+	else if (this->planets.isElementPresent(secondPName)) {
+		JedisFromBoth = this->planets[this->planets.findElementIndex(secondPName)].getJedis();
+		std::cout << firstPName << " is not present in the database! Therefore only " << secondPName << " will be printed!" << std::endl;
+		JedisFromBoth.sort(byName);
+		JedisFromBoth.print();
+	}
+	else {
+		std::cout << "There are no planets with such names in the database!" << std::endl;
+	}
+}
+
+void CommandList::print_planets()
+{
+	String firstPName;
+	String secondPName;
+	std::cout << "Enter the first planet's name: ";
+	std::cin >> firstPName;
+	std::cout << "Enter the second planet's name: ";
+	std::cin >> secondPName;
+	Vector<Jedi> JedisFromBoth;
+	if (this->planets.isElementPresent(firstPName)) {
+		JedisFromBoth = this->planets[this->planets.findElementIndex(firstPName)].getJedis();
+		if (firstPName == secondPName) {
+			std::cout << "Both names are the same, therefore result shown is only from " << firstPName << std::endl;
+			JedisFromBoth.sort(byName);
+			JedisFromBoth.print();
+		}
+		else if (this->planets.isElementPresent(secondPName)) {
+			JedisFromBoth += this->planets[this->planets.findElementIndex(secondPName)].getJedis();
+			JedisFromBoth.sort(byName);
+			std::cout << "The jedis from " << firstPName << " and " << secondPName << " in alphabetical order are: " << std::endl;
+			JedisFromBoth.print();
+		}
+		else {
+			std::cout << secondPName << " is not present in the database! Therefore only " << firstPName << " will be printed!" << std::endl;
+			JedisFromBoth.sort(byName);
+			JedisFromBoth.print();
+		}
+	}
+	else if (this->planets.isElementPresent(secondPName)) {
+		JedisFromBoth = this->planets[this->planets.findElementIndex(secondPName)].getJedis();
+		std::cout << firstPName << " is not present in the database! Therefore only " << secondPName << " will be printed!" << std::endl;
+		JedisFromBoth.sort(byName);
+		JedisFromBoth.print();
+	}
+	else {
+		std::cout << "There are no planets with such names in the database!" << std::endl;
 	}
 }
 

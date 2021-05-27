@@ -17,7 +17,7 @@ public:
 	size_t getSize() const;
 	size_t getCapacity() const;
 
-	bool operator==(const String&);
+	bool operator==(const String&) const;
 	bool operator>(const String&) const;
 	bool operator<(const String&) const;
 	char operator[](size_t index);
