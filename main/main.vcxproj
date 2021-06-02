@@ -145,6 +145,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Planet.cpp" />
     <ClCompile Include="PlanetRepository.cpp" />
+    <ClCompile Include="Repository.cpp" />
     <ClCompile Include="String.cpp" />
     <ClCompile Include="Vector.cpp" />
   </ItemGroup>
@@ -154,6 +155,7 @@
     <ClInclude Include="Jedi.h" />
     <ClInclude Include="Planet.h" />
     <ClInclude Include="PlanetRepository.h" />
+    <ClInclude Include="Repository.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>

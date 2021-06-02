@@ -80,6 +80,31 @@ bool Jedi::operator==(const Jedi& other)
 	return this->name == other.name;
 }
 
+void Jedi::setName(const String& name)
+{
+	this->name = name;
+}
+
+void Jedi::setcurrentRank(const String& rank)
+{
+	this->currentRank = rank;
+}
+
+void Jedi::setAge(const size_t age)
+{
+	this->age = age;
+}
+
+void Jedi::setSaberColor(const String& color)
+{
+	this->saberColor = color;
+}
+
+void Jedi::setPower(const double power)
+{
+	this->power = power;
+}
+
 String Jedi::getName() const
 {
 	return this->name;
@@ -113,6 +138,11 @@ double Jedi::getPower() const
 Vector<String>& Jedi::getRanks()
 {
 	return this->ranks;
+}
+
+void Jedi::saveToFile(std::ostream& out)
+{
+	out << this->name << '|' << this->currentRank << ' ' << this->age << ' ' << this->saberColor << ' ' << this->power << '\n';
 }
 
 std::ostream& operator<<(std::ostream& out, const Jedi& other)

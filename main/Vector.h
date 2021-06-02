@@ -27,6 +27,7 @@ public:
 	const size_t findElementIndex(const T& element) const;
 
 	void pop_by_index(const size_t& index);
+	void clear();
 	void sort(bool(comparator)(const T& element1, const T& element2));
 
 private:

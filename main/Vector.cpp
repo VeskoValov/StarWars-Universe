@@ -192,6 +192,17 @@ void Vector<T>::pop_by_index(const size_t& index)
 }
 
 template<typename T>
+void Vector<T>::clear()
+{
+	if (this->elements != nullptr) {
+		this->erase();
+	}
+	this->size = 0;
+	this->capacity = 8;
+	this->elements = new T[capacity];
+}
+
+template<typename T>
 void Vector<T>::sort(bool(comparator)(const T& element1, const T& element2))
 {
 	for (int i = 0; i < this->size - 1; ++i)

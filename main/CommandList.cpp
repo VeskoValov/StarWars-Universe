@@ -47,7 +47,7 @@ void CommandList::run()
 		case 9: print_planet(); break;
 		case 10: print_planets(); break;
 		case 11: print_jedi(); break;
-		//case 12: help(); break;
+			//case 12: help(); break;
 		case 13: exit(0); break;
 		}
 	}
@@ -149,8 +149,8 @@ void CommandList::remove_jedi()
 	for (size_t i = 0; i < this->planets.getSize(); ++i)
 	{
 		if (this->planets[i].getName() == pname) {
-				this->planets[i].removeJedi(newJedi);
-				return;
+			this->planets[i].removeJedi(newJedi);
+			return;
 		}
 	}
 	std::cout << "There is no planet with such a name!" << std::endl;
@@ -600,6 +600,51 @@ void CommandList::print_jedi()
 		}
 	}
 	std::cout << "There is no jedi with that name!" << std::endl;
+}
+
+void CommandList::saveToStream(std::ostream& out)
+{
+	for (size_t i = 0; i < this->planets.getSize(); ++i)
+	{
+		this->planets[i].saveToFile(out);
+	}
+}
+
+void CommandList::loadFromStream(std::istream& in)
+{
+	char* buffer = new char[500];
+	char* nJedis = new char[3];
+	Planet tempPlanet;
+	Jedi tempJedi;
+	Vector<Jedi> tempJedis;
+	String emptyLine;
+	while (!(in.eof())) {
+		in.getline(nJedis, 500, ' ');
+		in.getline(buffer, 500);
+		tempPlanet.setName(buffer);
+		for (size_t i = 0; i < atoi(nJedis); ++i)
+		{
+			in.getline(buffer, 500, '|');
+			tempJedi.setName(buffer);
+			in.getline(buffer, 500, ' ');
+			tempJedi.setcurrentRank(buffer);
+			in.getline(buffer, 500, ' ');
+			tempJedi.setAge(atoi(buffer));
+			in.getline(buffer, 500, ' ');
+			tempJedi.setSaberColor(buffer);
+			in.getline(buffer, 500);
+			tempJedi.setPower(atof(buffer));
+			tempJedis.push_back(tempJedi);
+		}
+		emptyLine = nJedis;
+		if (emptyLine.getSize() != 0) {
+			tempPlanet.setJedis(tempJedis);
+			tempJedis.clear();
+			this->planets.push_back(tempPlanet);
+		}
+	}
+	delete[] nJedis;
+	delete[] buffer;
 }
 
 Vector<Planet>& CommandList::getPlanets()

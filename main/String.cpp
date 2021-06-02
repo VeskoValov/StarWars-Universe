@@ -170,11 +170,10 @@ std::ostream& operator<<(std::ostream& out, const String& other)
 
 std::istream& operator>>(std::istream& in, String& other)
 {
-	in.getline(other.data, other.capacity);
-	other.size = strlen(other.data);
-	if (other.size == other.capacity - 1) {
-		other.resize();
-	}
+	char* newData = new char[500];
+	in.getline(newData, 500);
+	other = newData;
+	delete[] newData;
 	/*for (size_t i = 0; i < other.size; i++)
 	{
 		in >> other.data[i];

@@ -30,6 +30,9 @@ public:
 	void print_jedi(const String& jname);
 	void print_jedi();
 
+	void saveToStream(std::ostream& out);
+	void loadFromStream(std::istream& in);
+
 	Vector<Planet>& getPlanets();
 private:
 	String command;

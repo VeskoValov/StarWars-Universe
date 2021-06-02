@@ -39,6 +39,9 @@
     <ClCompile Include="Comparators.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Repository.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="String.h">
@@ -61,6 +64,9 @@
     </ClInclude>
     <ClInclude Include="Comparators.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Repository.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

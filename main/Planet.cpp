@@ -46,6 +46,11 @@ void Planet::setJedis(const Vector<Jedi> other)
 	this->jedis = other;
 }
 
+void Planet::setName(const String& newName)
+{
+	this->name = newName;
+}
+
 void Planet::promoteJedi(const Jedi& newJedi, const double& multiplier)
 {
 	this->jedis[this->jedis.findElementIndex(newJedi)].promote(multiplier);
@@ -65,6 +70,17 @@ void Planet::print() const
 bool Planet::operator==(const Planet& other)
 {
 	return this->name == other.name;
+}
+
+void Planet::saveToFile(std::ostream& out)
+{
+	size_t jediSize = this->jedis.getSize();
+	out << jediSize << ' ' << this->name <<  '\n';
+	for (size_t i = 0; i < this->jedis.getSize(); ++i)
+	{
+		this->jedis[i].saveToFile(out);
+		//out << '\n';
+	}
 }
 
 std::ostream& operator<<(std::ostream& out, const Planet& other)
