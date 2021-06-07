@@ -33,13 +33,7 @@
     <ClCompile Include="CommandList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PlanetRepository.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Comparators.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Repository.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,14 +53,8 @@
     <ClInclude Include="CommandList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PlanetRepository.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Comparators.h">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Repository.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Test.h">
       <Filter>Header Files</Filter>

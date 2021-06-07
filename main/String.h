@@ -26,6 +26,9 @@ public:
 	void print() const;
 	friend std::ostream& operator<<(std::ostream& out, const String& other);
 	friend std::istream& operator>>(std::istream& in, String& other);
+
+	int atoi();
+	double atof();
 private:
 	char* data;
 	size_t size;

@@ -26,13 +26,6 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& other)
 }
 
 template <typename T>
-Vector<T>::~Vector()
-{
-	this->erase();
-}
-
-
-template <typename T>
 void Vector<T>::copy(const Vector<T>& other)
 {
 	this->elements = new T[other.capacity];
@@ -49,6 +42,11 @@ void Vector<T>::erase()
 	delete[] this->elements;
 }
 
+template <typename T>
+Vector<T>::~Vector()
+{
+	this->erase();
+}
 
 template <typename T>
 void Vector<T>::resize()

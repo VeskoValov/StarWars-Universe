@@ -2,29 +2,27 @@
 
 CommandList::CommandList()
 {
-	this->command = String::String();
 	this->filepath = "StarWars.universe";
-	this->planets = Vector<Planet>::Vector();
 	this->isOpenedAFile = false;
-	this->commandList = Vector<String>::Vector();
 	this->commandList.push_back("open"); // 0
 	this->commandList.push_back("help"); // 1
-	this->commandList.push_back("add_planet"); // 2
-	this->commandList.push_back("create_jedi"); // 3
-	this->commandList.push_back("remove_jedi"); // 4
-	this->commandList.push_back("promote_jedi"); // 5
-	this->commandList.push_back("demote_jedi"); // 6
-	this->commandList.push_back("get_strongest_jedi"); // 7
-	this->commandList.push_back("get_youngest_jedi"); // 8
-	this->commandList.push_back("get_most_used_saber_color"); // 9
-	this->commandList.push_back("get_most_used_saber_color_grand"); // 10
-	this->commandList.push_back("print_planet"); // 11
-	this->commandList.push_back("print_planets"); // 12
-	this->commandList.push_back("print_jedi"); // 13
-	this->commandList.push_back("close"); // 14
-	this->commandList.push_back("save"); // 15
-	this->commandList.push_back("saveas"); // 16
-	this->commandList.push_back("exit"); // 17
+	this->commandList.push_back("exit"); // 2
+	this->commandList.push_back("add_planet"); // 3
+	this->commandList.push_back("create_jedi"); // 4
+	this->commandList.push_back("remove_jedi"); // 5
+	this->commandList.push_back("promote_jedi"); // 6
+	this->commandList.push_back("demote_jedi"); // 7
+	this->commandList.push_back("get_strongest_jedi"); // 8
+	this->commandList.push_back("get_youngest_jedi"); // 9
+	this->commandList.push_back("get_most_used_saber_color"); // 10
+	this->commandList.push_back("get_most_used_saber_color_grand"); // 11
+	this->commandList.push_back("print_planet"); // 12
+	this->commandList.push_back("print_planets"); // 13
+	this->commandList.push_back("print_jedi"); // 14
+	this->commandList.push_back("close"); // 15
+	this->commandList.push_back("save"); // 16
+	this->commandList.push_back("saveas"); // 17
+	this->commandList.push_back("print_contents"); // 18
 }
 
 void CommandList::run()
@@ -38,35 +36,36 @@ void CommandList::run()
 			continue;
 		}
 		size_t commandNum = this->commandList.findElementIndex(command);
-		if (commandNum < 2) {
+		if (commandNum < 3) {
 			switch (commandNum)
 			{
 			case 0: open(); break;
 			case 1: help(); break;
+			case 2: exit(0); break;
 			}
 		}
 		if (this->isOpenedAFile) {
 			switch (commandNum)
 			{
-			case 2: add_planet(); break;
-			case 3: create_jedi(); break;
-			case 4: remove_jedi(); break;
-			case 5: promote_jedi(); break;
-			case 6: demote_jedi(); break;
-			case 7: get_strongest_jedi(); break;
-			case 8: get_youngest_jedi(); break;
-			case 9: get_most_used_saber_color(); break;
-			case 10: get_most_used_saber_color_grand(); break;
-			case 11: print_planet(); break;
-			case 12: print_planets(); break;
-			case 13: print_jedi(); break;
-			case 14: close(); break;
-			case 15: save(); break;
-			case 16: saveas(); break;
-			case 17: exit(0); break;
+			case 3: add_planet(); break;
+			case 4: create_jedi(); break;
+			case 5: remove_jedi(); break;
+			case 6: promote_jedi(); break;
+			case 7: demote_jedi(); break;
+			case 8: get_strongest_jedi(); break;
+			case 9: get_youngest_jedi(); break;
+			case 10: get_most_used_saber_color(); break;
+			case 11: get_most_used_saber_color_grand(); break;
+			case 12: print_planet(); break;
+			case 13: print_planets(); break;
+			case 14: print_jedi(); break;
+			case 15: close(); break;
+			case 16: save(); break;
+			case 17: saveas(); break;
+			case 18: print_contents(); break;
 			}
 		}
-		else if (commandNum > 1) {
+		else if (commandNum > 2) {
 			std::cout << "Please open a file first!" << std::endl;
 		}
 	}
@@ -91,7 +90,16 @@ void CommandList::add_planet()
 
 void CommandList::create_jedi(const String& pname, const String& jname, const String& rank, const size_t age, const String& saberColor, const double strength)
 {
-	Jedi newJedi(jname, rank, age, saberColor, strength);
+	Jedi newJedi;
+	if (!(this->planets.isElementPresent(pname))) {
+		std::cout << "There is no planet with that name in the database! Please try again." << std::endl;
+		return;
+	}
+	if (!(newJedi.getRanks().isElementPresent(rank))) {
+		std::cout << "The rank entered is not a valid one! Please try again." << std::endl;
+		return;
+	}
+	newJedi = Jedi::Jedi(jname, rank, age, saberColor, strength);
 	for (size_t i = 0; i < this->planets.getSize(); ++i) {
 		if (this->planets[i].getJedis().isElementPresent(newJedi)) {
 			std::cout << "There is already a jedi with the same name!" << std::endl;
@@ -112,28 +120,50 @@ void CommandList::create_jedi(const String& pname, const String& jname, const St
 void CommandList::create_jedi()
 {
 	String pname, jname, rank, saberColor;
+	Jedi newJedi;
 	size_t age;
 	double strength;
 	std::cout << "Enter the planet's name: ";
 	std::cin >> pname;
+	if(!(this->planets.isElementPresent(pname))) {
+		std::cout << "There is no planet with that name in the database! Please try again." << std::endl;
+		return;
+	}
 	std::cout << "Enter the jedi's name: ";
 	std::cin >> jname;
+	newJedi.setName(jname);
+	for (size_t i = 0; i < this->planets.getSize(); ++i) {
+		if (this->planets[i].getJedis().isElementPresent(newJedi)) {
+			std::cout << "There is already a jedi with the same name! Please try again." << std::endl;
+			return;
+		}
+	}
 	std::cout << "Enter the jedi's rank: ";
 	std::cin >> rank;
+	if (!(newJedi.getRanks().isElementPresent(rank))) {
+		std::cout << "The rank entered is not a valid one! Please try again." << std::endl;
+		return;
+	}
 	std::cout << "Enter the jedi's lightsaber color: ";
 	std::cin >> saberColor;
 	std::cout << "Enter the jedi's age: ";
 	std::cin >> age;
+	if (!std::cin.good()) {
+		std::cout << "Invalid input! Try again." << std::endl;
+		std::cin.clear();
+		std::cin.ignore(INT_MAX, '\n');
+		return;
+	}
 	std::cout << "Enter the jedi's strength: ";
 	std::cin >> strength;
-	std::cin.ignore();
-	Jedi newJedi(jname, rank, age, saberColor, strength);
-	for (size_t i = 0; i < this->planets.getSize(); ++i) {
-		if (this->planets[i].getJedis().isElementPresent(newJedi)) {
-			std::cout << "There is already a jedi with the same name!" << std::endl;
-			return;
-		}
+	if (!std::cin.good()) {
+		std::cout << "Invalid input! Try again." << std::endl;
+		std::cin.clear();
+		std::cin.ignore(INT_MAX, '\n');
+		return;
 	}
+	std::cin.ignore();
+	newJedi = Jedi::Jedi(jname, rank, age, saberColor, strength);
 	for (size_t i = 0; i < this->planets.getSize(); ++i)
 	{
 		if (this->planets[i].getName() == pname) {
@@ -195,6 +225,12 @@ void CommandList::promote_jedi()
 	std::cin >> jname;
 	std::cout << "Enter the multiplier: ";
 	std::cin >> multiplier;
+	if (!std::cin.good()) {
+		std::cout << "Invalid input! Try again." << std::endl;
+		std::cin.clear();
+		std::cin.ignore(INT_MAX, '\n');
+		return;
+	}
 	std::cin.ignore();
 	Jedi newJedi(jname);
 	for (size_t i = 0; i < this->planets.getSize(); ++i) {
@@ -226,6 +262,12 @@ void CommandList::demote_jedi()
 	std::cin >> jname;
 	std::cout << "Enter the multiplier: ";
 	std::cin >> multiplier;
+	if (!std::cin.good()) {
+		std::cout << "Invalid input! Try again." << std::endl;
+		std::cin.clear();
+		std::cin.ignore(INT_MAX, '\n');
+		return;
+	}
 	std::cin.ignore();
 	Jedi newJedi(jname);
 	for (size_t i = 0; i < this->planets.getSize(); ++i) {
@@ -648,11 +690,13 @@ void CommandList::loadFromStream(std::istream& in)
 			in.getline(buffer, 500, ' ');
 			tempJedi.setcurrentRank(buffer);
 			in.getline(buffer, 500, ' ');
-			tempJedi.setAge(atoi(buffer));
+			emptyLine = buffer;
+			tempJedi.setAge(emptyLine.atoi());
 			in.getline(buffer, 500, ' ');
 			tempJedi.setSaberColor(buffer);
 			in.getline(buffer, 500);
-			tempJedi.setPower(atof(buffer));
+			emptyLine = buffer;
+			tempJedi.setPower(emptyLine.atof());
 			tempJedis.push_back(tempJedi);
 		}
 		emptyLine = nJedis;
@@ -703,29 +747,54 @@ void CommandList::saveas()
 void CommandList::help() const
 {
 	std::cout << "open <filename> - opens a file of your choise. If such does not exists, creates a new empty one." << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "add_planet <planet name> - creates and adds a planet to the database." << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "create_jedi <planet name> <jedi name> <rank> <saber color> <age> <power> - creates a jedi on the " << std::endl;
 	std::cout << "specified planet with the given info." << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "remove_jedi <jedi name> <planet name> - removes a certain jedi from a given planet." << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "promote_jedi <jedi name> <multiplier> - promotes the jedi and increases his power based on a formula." << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "demote_jedi <jedi name> <multiplier> - demotes the jedi and decreases his power based on a formula." << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "get_strongest_jedi <planet name> - finds and returns the strongest jedi on the given planet." << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "get_youngest_jedi <planet name> <rank> - finds and returns the youngest jedi on the given planet from " << std::endl; 
 	std::cout << "the specified rank." << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "get_most_used_saber_color <planet name> <rank> - finds and returns the most used saber color on the " << std::endl;
 	std::cout << "given planet by the specified rank." << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "get_most_used_saber_color_grand <planet name> - finds and returns the most used saber color on the " << std::endl;
 	std::cout << "given planet by the grandmasters." << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "print_planet <planet name> - prints the name of the planet and the inhabitants, first sorted in ascending order " << std::endl;
 	std::cout << "by rank, then by second key - lexicographically by name." << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "print_planets <planet name> <planet name> - prints the contents of the both planet and sorts the inhabitants " << std::endl;
 	std::cout << "lexicographically." << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "print_jedi <jedi name> - prints the information about the jedi." << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "close - closes the currently opened file." << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "save - saves the currently opened file." << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "saveas <filename> - saves the currently opened file as a new file with a new name." << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
+	std::cout << "print_contents - prints the contents of the currently opened file." << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "help - prints all the avaible commands." << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << "exit - exits the program." << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------------------" << std::endl;
+}
+
+void CommandList::print_contents()
+{
+	this->saveToStream(std::cout);
 }
 
 Vector<Planet>& CommandList::getPlanets()
@@ -735,7 +804,7 @@ Vector<Planet>& CommandList::getPlanets()
 
 void CommandList::open(const char* filepath)
 {
-	this->close();
+	this->planets.clear();
 	this->filepath = filepath;
 	std::ifstream in(this->filepath.getData());
 	if (!(in.good())) {

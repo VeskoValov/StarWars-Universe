@@ -2,7 +2,7 @@
 #include <iostream>
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest.h"
-#include "Planet.h"
+#include "CommandList.h"
 
 TEST_CASE("Testing Jedi") {
 
@@ -62,6 +62,42 @@ TEST_CASE("Testing Planet") {
 
 }
 
+TEST_CASE("Testing CommandList"){
+    CommandList testList;
+
+    testList.add_planet("Earth");
+    CHECK(testList.getPlanets()[0].getName() == "Earth");
+
+    testList.add_planet("Mars");
+    CHECK(testList.getPlanets()[1].getName() == "Mars");
+
+    testList.add_planet("Uranus");
+    CHECK(testList.getPlanets()[2].getName() == "Uranus");
+
+    testList.create_jedi("Earth", "Vesko", "PADAWAN", 20, "green", 3.4);
+    CHECK(testList.getPlanets()[0].getJedis()[0].getName() == "Vesko");
+    CHECK(testList.getPlanets()[0].getJedis()[0].getRank() == "PADAWAN");
+    CHECK(testList.getPlanets()[0].getJedis()[0].getAge() == 20);
+    CHECK(testList.getPlanets()[0].getJedis()[0].getColor() == "green");
+    CHECK(testList.getPlanets()[0].getJedis()[0].getPower() == 3.4);
+
+    testList.create_jedi("Mars", "Alex", "KNIGHT", 20, "blue", 7);
+    testList.create_jedi("Earth", "Dobri", "KNIGHT", 20, "blue", 6);
+
+    std::ofstream out("Test.txt");
+    testList.saveToStream(out);
+    out.close();
+
+    CommandList testList2;
+    std::ifstream in("Test.txt");
+    testList2.loadFromStream(in);
+    in.close();
+
+    for (size_t i = 0; i < testList.getPlanets().getSize(); ++i)
+    {
+        CHECK(testList.getPlanets()[i] == testList2.getPlanets()[i]);
+    }
+}
 void runtests() {
     doctest::Context().run();
 }

@@ -41,6 +41,7 @@ public:
 	void saveas(const String& filepath);
 	void saveas();
 	void help() const;
+	void print_contents();
 	Vector<Planet>& getPlanets();
 private:
 	String command;

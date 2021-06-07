@@ -118,6 +118,40 @@ void String::print() const
 	std::cout << std::endl;
 }
 
+int String::atoi()
+{
+	int number = 0;
+	for (size_t i = 0; i < this->size; ++i)
+	{
+		number *= 10; 
+		number += this->data[i] - '0';
+	}
+	return number;
+}
+
+double String::atof()
+{
+	double number = 0;
+	double counter = 0;
+	bool startCounting = false;
+	for (size_t i = 0; i < this->size; ++i)
+	{
+		if (this->data[i] == '.') {
+			startCounting = true;
+			continue;
+		}
+		if (startCounting) {
+			++counter;
+		}
+		number *= 10;
+		number += this->data[i] - '0';
+	}
+	if (counter == 0) {
+		return number;
+	}
+	return number/(counter*10);
+}
+
 void String::copy(const String& other)
 {
 	this->capacity = other.capacity;
