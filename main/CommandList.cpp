@@ -3,29 +3,34 @@
 CommandList::CommandList()
 {
 	this->command = String::String();
+	this->filepath = "StarWars.universe";
 	this->planets = Vector<Planet>::Vector();
-	this->working = true;
+	this->isOpenedAFile = false;
 	this->commandList = Vector<String>::Vector();
-	this->commandList.push_back("add_planet"); // 0
-	this->commandList.push_back("create_jedi"); // 1
-	this->commandList.push_back("remove_jedi"); // 2
-	this->commandList.push_back("promote_jedi"); // 3
-	this->commandList.push_back("demote_jedi"); // 4
-	this->commandList.push_back("get_strongest_jedi"); // 5
-	this->commandList.push_back("get_youngest_jedi"); // 6
-	this->commandList.push_back("get_most_used_saber_color"); // 7
-	this->commandList.push_back("get_most_used_saber_color_grand"); // 8
-	this->commandList.push_back("print_planet"); // 9
-	this->commandList.push_back("print_planets"); // 10
-	this->commandList.push_back("print_jedi"); // 11
-	this->commandList.push_back("help"); // 12
-	this->commandList.push_back("exit"); // 13
+	this->commandList.push_back("open"); // 0
+	this->commandList.push_back("help"); // 1
+	this->commandList.push_back("add_planet"); // 2
+	this->commandList.push_back("create_jedi"); // 3
+	this->commandList.push_back("remove_jedi"); // 4
+	this->commandList.push_back("promote_jedi"); // 5
+	this->commandList.push_back("demote_jedi"); // 6
+	this->commandList.push_back("get_strongest_jedi"); // 7
+	this->commandList.push_back("get_youngest_jedi"); // 8
+	this->commandList.push_back("get_most_used_saber_color"); // 9
+	this->commandList.push_back("get_most_used_saber_color_grand"); // 10
+	this->commandList.push_back("print_planet"); // 11
+	this->commandList.push_back("print_planets"); // 12
+	this->commandList.push_back("print_jedi"); // 13
+	this->commandList.push_back("close"); // 14
+	this->commandList.push_back("save"); // 15
+	this->commandList.push_back("saveas"); // 16
+	this->commandList.push_back("exit"); // 17
 }
 
 void CommandList::run()
 {
 	std::cout << "Welcome!" << std::endl;
-	while (this->working) {
+	while (true) {
 		std::cout << "Enter a command: ";
 		std::cin >> command;
 		if (!(this->commandList.isElementPresent(command))) {
@@ -33,22 +38,36 @@ void CommandList::run()
 			continue;
 		}
 		size_t commandNum = this->commandList.findElementIndex(command);
-		switch (commandNum)
-		{
-		case 0: add_planet(); break;
-		case 1: create_jedi(); break;
-		case 2: remove_jedi(); break;
-		case 3: promote_jedi(); break;
-		case 4: demote_jedi(); break;
-		case 5: get_strongest_jedi(); break;
-		case 6: get_youngest_jedi(); break;
-		case 7: get_most_used_saber_color(); break;
-		case 8: get_most_used_saber_color_grand(); break;
-		case 9: print_planet(); break;
-		case 10: print_planets(); break;
-		case 11: print_jedi(); break;
-			//case 12: help(); break;
-		case 13: exit(0); break;
+		if (commandNum < 2) {
+			switch (commandNum)
+			{
+			case 0: open(); break;
+			case 1: help(); break;
+			}
+		}
+		if (this->isOpenedAFile) {
+			switch (commandNum)
+			{
+			case 2: add_planet(); break;
+			case 3: create_jedi(); break;
+			case 4: remove_jedi(); break;
+			case 5: promote_jedi(); break;
+			case 6: demote_jedi(); break;
+			case 7: get_strongest_jedi(); break;
+			case 8: get_youngest_jedi(); break;
+			case 9: get_most_used_saber_color(); break;
+			case 10: get_most_used_saber_color_grand(); break;
+			case 11: print_planet(); break;
+			case 12: print_planets(); break;
+			case 13: print_jedi(); break;
+			case 14: close(); break;
+			case 15: save(); break;
+			case 16: saveas(); break;
+			case 17: exit(0); break;
+			}
+		}
+		else if (commandNum > 1) {
+			std::cout << "Please open a file first!" << std::endl;
 		}
 	}
 }
@@ -647,7 +666,107 @@ void CommandList::loadFromStream(std::istream& in)
 	delete[] buffer;
 }
 
+void CommandList::close()
+{
+	this->planets.clear();
+	this->isOpenedAFile = false;
+	std::cout << "File successfully closed." << std::endl;
+}
+
+void CommandList::save()
+{
+	std::ofstream out(this->filepath.getData(), std::ios::out);
+	this->saveToStream(out);
+	out.close();
+	std::cout << "FIle successfully saved." << std::endl;
+}
+
+void CommandList::saveas(const String& filepath)
+{
+	std::ofstream out(filepath.getData(), std::ios::out);
+	this->saveToStream(out);
+	out.close();
+	std::cout << "File successfully saved as " << filepath << "." << std::endl;
+}
+
+void CommandList::saveas()
+{
+	String filepath;
+	std::cout << "Enter the designated filepath: ";
+	std::cin >> filepath;
+	std::ofstream out(filepath.getData());
+	this->saveToStream(out);
+	out.close();
+	std::cout << "File successfully saved as " << filepath << "." << std::endl;
+}
+
+void CommandList::help() const
+{
+	std::cout << "open <filename> - opens a file of your choise. If such does not exists, creates a new empty one." << std::endl;
+	std::cout << "add_planet <planet name> - creates and adds a planet to the database." << std::endl;
+	std::cout << "create_jedi <planet name> <jedi name> <rank> <saber color> <age> <power> - creates a jedi on the " << std::endl;
+	std::cout << "specified planet with the given info." << std::endl;
+	std::cout << "remove_jedi <jedi name> <planet name> - removes a certain jedi from a given planet." << std::endl;
+	std::cout << "promote_jedi <jedi name> <multiplier> - promotes the jedi and increases his power based on a formula." << std::endl;
+	std::cout << "demote_jedi <jedi name> <multiplier> - demotes the jedi and decreases his power based on a formula." << std::endl;
+	std::cout << "get_strongest_jedi <planet name> - finds and returns the strongest jedi on the given planet." << std::endl;
+	std::cout << "get_youngest_jedi <planet name> <rank> - finds and returns the youngest jedi on the given planet from " << std::endl; 
+	std::cout << "the specified rank." << std::endl;
+	std::cout << "get_most_used_saber_color <planet name> <rank> - finds and returns the most used saber color on the " << std::endl;
+	std::cout << "given planet by the specified rank." << std::endl;
+	std::cout << "get_most_used_saber_color_grand <planet name> - finds and returns the most used saber color on the " << std::endl;
+	std::cout << "given planet by the grandmasters." << std::endl;
+	std::cout << "print_planet <planet name> - prints the name of the planet and the inhabitants, first sorted in ascending order " << std::endl;
+	std::cout << "by rank, then by second key - lexicographically by name." << std::endl;
+	std::cout << "print_planets <planet name> <planet name> - prints the contents of the both planet and sorts the inhabitants " << std::endl;
+	std::cout << "lexicographically." << std::endl;
+	std::cout << "print_jedi <jedi name> - prints the information about the jedi." << std::endl;
+	std::cout << "close - closes the currently opened file." << std::endl;
+	std::cout << "save - saves the currently opened file." << std::endl;
+	std::cout << "saveas <filename> - saves the currently opened file as a new file with a new name." << std::endl;
+	std::cout << "help - prints all the avaible commands." << std::endl;
+	std::cout << "exit - exits the program." << std::endl;
+}
+
 Vector<Planet>& CommandList::getPlanets()
 {
 	return this->planets;
+}
+
+void CommandList::open(const char* filepath)
+{
+	this->close();
+	this->filepath = filepath;
+	std::ifstream in(this->filepath.getData());
+	if (!(in.good())) {
+		std::cout << "File does not exists, therefore a new one will be created!" << std::endl;
+		std::ofstream out(this->filepath.getData());
+		out.close();
+		in.open(this->filepath.getData());
+	}
+	this->loadFromStream(in);
+	in.close();
+	this->isOpenedAFile = true;
+	std::cout << "File successfully opened." << std::endl;
+}
+
+void CommandList::open()
+{
+	this->planets.clear();
+	String filepath;
+	std::cout << "Enter the designated filepath: ";
+	std::cin >> filepath;
+	this->filepath = filepath;
+	std::ifstream in(this->filepath.getData());
+	if (!(in.good())) {
+		std::cout << "File does not exists, therefore a new one will be created!" << std::endl;
+		std::ofstream out(this->filepath.getData());
+		out.close();
+	}
+	else {
+		this->loadFromStream(in);
+		std::cout << "File successfully opened." << std::endl;
+	}
+	in.close();
+	this->isOpenedAFile = true;
 }

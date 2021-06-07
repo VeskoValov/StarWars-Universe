@@ -1,6 +1,7 @@
 #pragma once
 #include "Planet.h"
 #include "Comparators.h"
+#include <fstream>
 class CommandList
 {
 public:
@@ -33,11 +34,19 @@ public:
 	void saveToStream(std::ostream& out);
 	void loadFromStream(std::istream& in);
 
+	void open(const char* filepath);
+	void open();
+	void close();
+	void save();
+	void saveas(const String& filepath);
+	void saveas();
+	void help() const;
 	Vector<Planet>& getPlanets();
 private:
 	String command;
+	String filepath;
 	Vector<String> commandList;
 	Vector<Planet> planets;
-	bool working;
+	bool isOpenedAFile;
 };
 
